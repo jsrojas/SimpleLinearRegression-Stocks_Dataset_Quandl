@@ -11,6 +11,7 @@ from sklearn import preprocessing, cross_validation, svm
 from sklearn.linear_model import LinearRegression
 import matplotlib.pyplot as plt
 from matplotlib import style
+import pickle
 
 #This defines the style to use on a plot with matplotlib
 style.use('ggplot')
@@ -88,12 +89,30 @@ X_train, X_test, y_train, y_test = cross_validation.train_test_split(X, y, test_
 
 #And now we define our classifier as linear regression and fit the data
 #to perform the training process of the classifier.
-classifier = LinearRegression()
-classifier.fit(X_train, y_train)
+
+    #classifier = LinearRegression()
+    #classifier.fit(X_train, y_train)
+
+#With the pickle module it is possible to save the trained classifier to be used later
+#and that will save the effort of doing all the training process again. It is like to
+#generate a .model file from weka but in Python. Obviously this should be done after
+#the fit() function which trains the classifier.
+
+#This creates the .pickle file with the dump() function that enables to use the classifier
+#later just by loading it on a variable in the script
+    #with open('linearregression.pickle', 'wb') as f:
+        #pickle.dump(classifier, f)
+
+#With this the .pickle file is loaded and assigned to the classifier variable to be used as usual.
+pickle_in = open('linearregression.pickle', 'rb')
+classifier = pickle.load(pickle_in)
+    
 
 #We can test another algorithm like support vector regression like this
 classifier_SVR = svm.SVR()
 classifier_SVR.fit(X_train, y_train)
+    #with open('SVR.pickle', 'wb') as f:
+            #pickle.dump(classifier_SVR, f)
 
 #Now in order to test the classifiera we use the score() function
 #like this
