@@ -59,14 +59,19 @@ X = np.array(df.drop(['Label'], axis=1))
 #this helps to save up resources and time in the training stage
 X = preprocessing.scale(X)
 
-#Now we extract the the rows of the last 10 days from the dataset so it becomes the unknown data to predict
+#Now we extract the the rows of the last 10 days from the dataset so it becomes
+#the unknown data to predict
 X_lately = X[-forecast_out:]
+
+#And now we create the training set X without the data from the 10 last days
+X = X[:-forecast_out]
+
+
 
 #Print the future 10 days instances without the label and normalized
 print(X_lately)
 
-#And now we create the training set X without the data from the 10 last days
-X = X[:-forecast_out:]
+
 
 #This removes the last rows that have NaN spaces in the label column due to the shift
 df.dropna(inplace=True)
